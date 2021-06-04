@@ -43,7 +43,7 @@ public class Airport {
     public PassengerPlane getPassengerPlaneWithMaxPassengersCapacity() {
         return getPassengerPlanes().stream()
                 .max(Comparator.comparingInt(PassengerPlane::getPassengersCapacity))
-                .get();
+                .orElse(null);
     }
 
     public List<MilitaryPlane> getTransportMilitaryPlanes() {
@@ -69,8 +69,9 @@ public class Airport {
         return this;
     }
 
-    public void sortByMaxLoadCapacity() {
+    public Airport sortByMaxLoadCapacity() {
         planes.sort(Comparator.comparingInt(Plane::getMaxLoadCapacity));
+        return this;
     }
 
     @Override

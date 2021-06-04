@@ -8,8 +8,8 @@ import java.util.Objects;
 
 public class ExperimentalPlane extends Plane {
 
-    private ExperimentalTypes type;
-    private ClassificationLevel classificationLevel;
+    private final ExperimentalTypes type;
+    private final ClassificationLevel classificationLevel;
 
     public ExperimentalPlane(String model, int maxSpeed, int maxFlightDistance, int maxLoadCapacity, ExperimentalTypes type, ClassificationLevel classificationLevel) {
         super(model, maxSpeed, maxFlightDistance, maxLoadCapacity);
@@ -38,7 +38,7 @@ public class ExperimentalPlane extends Plane {
     @Override
     public String toString() {
         return "ExperimentalPlane{" +
-                "model='" + model + '\'' +
+                "model='" + getModel() + '\'' +
                 '}';
     }
 }

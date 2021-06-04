@@ -1,3 +1,4 @@
+import org.assertj.core.api.Assertions;
 import planes.ExperimentalPlane;
 import types.ClassificationLevel;
 import types.ExperimentalTypes;
@@ -9,10 +10,11 @@ import planes.PassengerPlane;
 import model.Plane;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class AirportTest {
-    private static List<Plane> planes = Arrays.asList(
+    private final List<Plane> planes = Arrays.asList(
             new PassengerPlane("Boeing-737", 900, 12000, 60500, 164),
             new PassengerPlane("Boeing-737-800", 940, 12300, 63870, 192),
             new PassengerPlane("Boeing-747", 980, 16100, 70500, 242),
@@ -31,8 +33,6 @@ public class AirportTest {
             new ExperimentalPlane("Ryan X-13 Vertijet", 560, 307, 500, ExperimentalTypes.VTOL, ClassificationLevel.TOP_SECRET)
     );
 
-    private static PassengerPlane planeWithMaxPassengerCapacity = new PassengerPlane("Boeing-747", 980, 16100, 70500, 242);
-
     @Test
     public void testGetTransportMilitaryPlanes() {
         Assert.assertTrue(new Airport(planes).getTransportMilitaryPlanes().stream()
@@ -41,25 +41,14 @@ public class AirportTest {
 
     @Test
     public void testGetPassengerPlaneWithMaxCapacity() {
-        Assert.assertEquals(planeWithMaxPassengerCapacity, new Airport(planes).getPassengerPlaneWithMaxPassengersCapacity());
+        Assert.assertEquals(new PassengerPlane("Boeing-747", 980, 16100, 70500, 242),
+                new Airport(planes).getPassengerPlaneWithMaxPassengersCapacity());
     }
 
     @Test
     public void testPlanesSortedByMaxLoadCapacity() {
-        Airport airport = new Airport(planes);
-        airport.sortByMaxLoadCapacity();
-        List<? extends Plane> planesSortedByMaxLoadCapacity = airport.getPlanes();
-
-        boolean nextPlaneMaxLoadCapacityIsHigherThanCurrent = true;
-        for (int i = 0; i < planesSortedByMaxLoadCapacity.size() - 1; i++) {
-            Plane currentPlane = planesSortedByMaxLoadCapacity.get(i);
-            Plane nextPlane = planesSortedByMaxLoadCapacity.get(i + 1);
-            if (currentPlane.getMaxLoadCapacity() > nextPlane.getMaxLoadCapacity()) {
-                nextPlaneMaxLoadCapacityIsHigherThanCurrent = false;
-                break;
-            }
-        }
-        Assert.assertTrue(nextPlaneMaxLoadCapacityIsHigherThanCurrent);
+        Assertions.assertThat(new Airport(planes).sortByMaxLoadCapacity().getPlanes())
+                .isSortedAccordingTo(Comparator.comparingInt(Plane::getMaxLoadCapacity));
     }
 
     @Test

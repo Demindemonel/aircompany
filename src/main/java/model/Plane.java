@@ -4,7 +4,7 @@ package model;
 import java.util.Objects;
 
 abstract public class Plane {
-    protected String model;
+    private final String model;
     private final int maxSpeed;
     private final int maxFlightDistance;
     private final int maxLoadCapacity;
@@ -14,6 +14,10 @@ abstract public class Plane {
         this.maxSpeed = maxSpeed;
         this.maxFlightDistance = maxFlightDistance;
         this.maxLoadCapacity = maxLoadCapacity;
+    }
+
+    public String getModel() {
+        return model;
     }
 
     public int getMaxSpeed() {
