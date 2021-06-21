@@ -17,6 +17,10 @@ public class ExperimentalPlane extends Plane {
         this.classificationLevel = classificationLevel;
     }
 
+    public ExperimentalTypes getType() {
+        return type;
+    }
+
     public ClassificationLevel getClassificationLevel() {
         return classificationLevel;
     }
@@ -38,7 +42,8 @@ public class ExperimentalPlane extends Plane {
     @Override
     public String toString() {
         return "ExperimentalPlane{" +
-                "model='" + getModel() + '\'' +
+                "type=" + type +
+                ", classificationLevel=" + classificationLevel +
                 '}';
     }
 }
